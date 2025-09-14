@@ -1,6 +1,6 @@
 package Journey;
 
-public enum RoadVehicles {
+public enum RoadVehicle {
     CAR("Car", 4, 0.2, 3),
     TAXI("Taxi", 4, 0.4, 0);
 
@@ -9,7 +9,7 @@ public enum RoadVehicles {
     private final double costPerMileInPounds;
     private final int parkingFee;
 
-    RoadVehicles(String displayName, int maxPassengers, double costPerMileInPounds, int parkingFee) {
+    RoadVehicle(String displayName, int maxPassengers, double costPerMileInPounds, int parkingFee) {
         this.displayName = displayName;
         this.maxPassengers = maxPassengers;
         this.costPerMileInPounds = costPerMileInPounds;
