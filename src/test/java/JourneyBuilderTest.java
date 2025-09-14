@@ -66,8 +66,8 @@ public class JourneyBuilderTest {
     }
 
     @Test
-    @DisplayName("Throws exception if request is missing passenger value for road journey")
-    public void testRoadJourneyFailsIfMissingPassengers() {
+    @DisplayName("Throws exception if request is missing passenger value")
+    public void testFailsIfMissingPassengers() {
         Mockito.when(mockRequest.getPassengers()).thenReturn(null);
         Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
         Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);
@@ -79,8 +79,21 @@ public class JourneyBuilderTest {
     }
 
     @Test
-    @DisplayName("Throws exception if request is missing home airport value for road journey")
-    public void testRoadJourneyFailsIfMissingHomeAirport() {
+    @DisplayName("Throws exception if request has passenger value less than 1")
+    public void testFailsIfNonPositivePassengers() {
+        Mockito.when(mockRequest.getPassengers()).thenReturn(0);
+        Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
+        Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            new JourneyBuilder(mockRequest).withRoadJourney().build();
+        });
+        assertEquals("Passengers must be greater than zero", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Throws exception if request is missing home airport value")
+    public void testFailsIfMissingHomeAirport() {
         Mockito.when(mockRequest.getPassengers()).thenReturn(2);
         Mockito.when(mockRequest.getHomeAirport()).thenReturn(null);
         Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);

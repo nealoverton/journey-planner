@@ -57,7 +57,6 @@ public class JourneyBuilder {
     }
 
     private void validateRequest() {
-        System.out.println(journeyRequest.getPassengers());
         if (StringUtils.isBlank(journeyRequest.getHomeAirport())) {
             throw new IllegalArgumentException("Home airport must be provided");
         }
