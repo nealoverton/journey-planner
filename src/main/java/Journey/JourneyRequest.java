@@ -7,10 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JourneyRequest {
-    private Integer passengers;
-    private Integer homeAirportDistanceMiles;
-    private String homeAirport;
-    private String destinationAirport;
+    private final Integer passengers;
+    private final Integer homeAirportDistanceMiles;
+    private final String homeAirport;
+    private final String destinationAirport;
 
     private JourneyRequest(Integer passengers, Integer homeAirportDistanceMiles, String homeAirport, String destinationAirport) {
         this.passengers = passengers;
