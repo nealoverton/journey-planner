@@ -28,5 +28,3 @@ Each Test class and method can be run individually by clicking IntelliJ's run bu
 ### Running Tests With Maven
 
 The tests for this application can be run using the Maven command `mvn test`.
-
-NOTE - The test output may begin with several warnings about restricted or unsafe methods being called. This is an upstream issue caused by Maven using tools and libraries which will have stricter access rules in future Java releases. It is not caused by this project's code.
