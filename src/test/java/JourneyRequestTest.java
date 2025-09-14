@@ -27,7 +27,7 @@ public class JourneyRequestTest {
 
     @DisplayName("Fails to instantiate with invalid homeAirportJourney input")
     @ParameterizedTest(name = "Test invalid homeAirportJourney input: {0}")
-    @ValueSource(strings = {"B20dfgds", "9B20", "a10", "100", "aaa", ""})
+    @ValueSource(strings = {"B20dfgds", "9B20", "a10", "100", "aaa", "", "B-20"})
     public void testUnsuccessfulInstantiationWithInvalidHomeAirportJourney(String invalidInput) {
         Optional<JourneyRequest> requestJourneyOptional = JourneyRequest.fromInput(2, invalidInput, "D");
         assertTrue(requestJourneyOptional.isEmpty());
