@@ -20,14 +20,6 @@ public class JourneyRequest {
     }
 
     public static Optional<JourneyRequest> fromInput(Integer passengers, String homeAirportJourney, String destinationAirport) {
-        if (passengers == null
-                || passengers <= 0
-                || StringUtils.isBlank(homeAirportJourney)
-                || StringUtils.isBlank(destinationAirport)
-        ) {
-            return Optional.empty();
-        }
-
         Pattern homeAirportJourneyPattern = Pattern.compile("^([A-Z]+)(\\d+)$");
         Matcher homeAirportJourneyMatcher = homeAirportJourneyPattern.matcher(homeAirportJourney);
         if (homeAirportJourneyMatcher.matches()) {
