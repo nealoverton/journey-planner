@@ -79,34 +79,34 @@ public class JourneyBuilder {
     }
 
     private void calculateAirJourneyCost(JourneyResponse journeyResponse, String startingAirport, String destinationAirport, boolean isOutbound) {
-        PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(
+        PriorityQueue<Map.Entry<String, Integer>> prioritisedRoutes = new PriorityQueue<>(
                 Comparator.comparingInt(Map.Entry::getValue)
         );
         Map<String, Integer> distances = new HashMap<>();
         Map<String, Flight> previousFlights = new HashMap<>();
 
-        for (String vertex : flightGraph.keySet()) {
-            distances.put(vertex, Integer.MAX_VALUE);
-            previousFlights.put(vertex, null);
+        for (String airport : flightGraph.keySet()) {
+            distances.put(airport, Integer.MAX_VALUE);
+            previousFlights.put(airport, null);
         }
+
         distances.put(startingAirport, 0);
+        prioritisedRoutes.offer(new AbstractMap.SimpleEntry<>(startingAirport, 0));
 
-        priorityQueue.offer(new AbstractMap.SimpleEntry<>(startingAirport, 0));
+        while (!prioritisedRoutes.isEmpty()) {
+            Map.Entry<String, Integer> current = prioritisedRoutes.poll();
+            String currentAirport = current.getKey();
+            int currentRouteDistance = current.getValue();
 
-        while (!priorityQueue.isEmpty()) {
-            Map.Entry<String, Integer> current = priorityQueue.poll();
-            String currentNode = current.getKey();
-            int currentDist = current.getValue();
+            if (currentRouteDistance > distances.get(currentAirport)) continue;
 
-            if (currentDist > distances.get(currentNode)) continue;
-
-            for (Flight flight : flightGraph.getOrDefault(currentNode, Collections.emptyList())) {
-                int newDistance = currentDist + flight.getDistanceInMiles();
+            for (Flight flight : flightGraph.getOrDefault(currentAirport, Collections.emptyList())) {
+                int newRouteDistance = currentRouteDistance + flight.getDistanceInMiles();
                 String targetAirport = flight.getTargetAirport();
-                if (newDistance < distances.getOrDefault(targetAirport, Integer.MAX_VALUE)) {
-                    distances.put(targetAirport, newDistance);
+                if (newRouteDistance < distances.getOrDefault(targetAirport, Integer.MAX_VALUE)) {
+                    distances.put(targetAirport, newRouteDistance);
                     previousFlights.put(targetAirport, flight);
-                    priorityQueue.offer(new AbstractMap.SimpleEntry<>(targetAirport, newDistance));
+                    prioritisedRoutes.offer(new AbstractMap.SimpleEntry<>(targetAirport, newRouteDistance));
                 }
             }
         }
