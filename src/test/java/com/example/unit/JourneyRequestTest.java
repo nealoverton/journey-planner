@@ -1,3 +1,5 @@
+package com.example.unit;
+
 import com.example.journey.JourneyRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

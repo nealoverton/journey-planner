@@ -1,4 +1,5 @@
-import com.example.Constant;
+package com.example.unit;
+
 import com.example.SampleDataProvider;
 import com.example.flight.Flight;
 import com.example.flight.FlightGraphBuilder;
