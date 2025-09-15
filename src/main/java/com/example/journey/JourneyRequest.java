@@ -61,4 +61,14 @@ public class JourneyRequest {
     public String getDestinationAirport() {
         return destinationAirport;
     }
+
+    @Override
+    public String toString() {
+        return "JourneyRequest{"
+                + "passengers=" + passengers
+                + ", homeAirportDistanceMiles=" + homeAirportDistanceMiles
+                + ", homeAirport='" + homeAirport + '\''
+                + ", destinationAirport='" + destinationAirport + '\''
+                + '}';
+    }
 }
