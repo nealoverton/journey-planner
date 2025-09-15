@@ -9,7 +9,6 @@ import java.util.*;
 
 public class JourneyBuilder {
     private static final int RETURN_JOURNEY_LEGS = 2;
-    private static final double AIR_JOURNEY_COST_PER_MILE = 0.1;
     private JourneyRequest journeyRequest;
     private boolean includeRoadJourney;
     private boolean includeAirJourney;
@@ -66,19 +65,19 @@ public class JourneyBuilder {
     }
 
     private void addAirJourneyDetails(JourneyResponse journeyResponse) {
-        calculateOutboundAirJourney(journeyResponse);
-        calculateInboundAirJourney(journeyResponse);
+        addOutboundAirJourney(journeyResponse);
+        addInboundAirJourney(journeyResponse);
     }
 
-    private void calculateOutboundAirJourney(JourneyResponse journeyResponse) {
-        calculateAirJourneyCost(journeyResponse, journeyRequest.getHomeAirport(), journeyRequest.getDestinationAirport(), true);
+    private void addOutboundAirJourney(JourneyResponse journeyResponse) {
+        findShortestAirRoute(journeyResponse, journeyRequest.getHomeAirport(), journeyRequest.getDestinationAirport(), journeyRequest.getPassengers(), true);
     }
 
-    private void calculateInboundAirJourney(JourneyResponse journeyResponse) {
-        calculateAirJourneyCost(journeyResponse, journeyRequest.getDestinationAirport(), journeyRequest.getHomeAirport(), false);
+    private void addInboundAirJourney(JourneyResponse journeyResponse) {
+        findShortestAirRoute(journeyResponse, journeyRequest.getDestinationAirport(), journeyRequest.getHomeAirport(), journeyRequest.getPassengers(), false);
     }
 
-    private void calculateAirJourneyCost(JourneyResponse journeyResponse, String startingAirport, String destinationAirport, boolean isOutbound) {
+    private void findShortestAirRoute(JourneyResponse journeyResponse, String startingAirport, String destinationAirport, Integer passengers, boolean isOutbound) {
         PriorityQueue<Map.Entry<String, Integer>> prioritisedRoutes = new PriorityQueue<>(
                 Comparator.comparingInt(Map.Entry::getValue)
         );
@@ -125,7 +124,7 @@ public class JourneyBuilder {
                journeyResponse.setOutboundAirCost(0);
             } else {
                 journeyResponse.setOutboundAirRoute(String.join("--", route));
-                journeyResponse.setOutboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+                journeyResponse.setOutboundAirCost(calculateAirJourneyCost(distances.get(destinationAirport), passengers));
             }
         } else {
             if (CollectionUtils.isEmpty(route)) {
@@ -133,9 +132,13 @@ public class JourneyBuilder {
                 journeyResponse.setInboundAirCost(0);
             } else {
                 journeyResponse.setInboundAirRoute(String.join("--", route));
-                journeyResponse.setInboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+                journeyResponse.setInboundAirCost(calculateAirJourneyCost(distances.get(destinationAirport), passengers));
             }
         }
+    }
+
+    private double calculateAirJourneyCost(Integer distance, Integer passengers) {
+        return distance * Constant.AIR_JOURNEY_COST_PER_MILE_PER_PASSENGER_IN_POUNDS * passengers;
     }
 
     private void validateRequest() {

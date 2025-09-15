@@ -1,4 +1,5 @@
 import com.example.Constant;
+import com.example.SampleDataProvider;
 import com.example.flight.Flight;
 import com.example.flight.FlightGraphBuilder;
 import com.example.journey.JourneyBuilder;
@@ -123,7 +124,7 @@ public class JourneyBuilderTest {
         Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
         Mockito.when(mockRequest.getDestinationAirport()).thenReturn("D");
 
-        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
+        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(SampleDataProvider.getFlights());
         JourneyResponse journeyResponse = new JourneyBuilder(mockRequest)
                 .withAirJourney(flightGraph)
                 .build();
@@ -138,7 +139,7 @@ public class JourneyBuilderTest {
         Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
         Mockito.when(mockRequest.getDestinationAirport()).thenReturn("D");
 
-        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
+        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(SampleDataProvider.getFlights());
         JourneyResponse journeyResponse = new JourneyBuilder(mockRequest)
                 .withAirJourney(flightGraph)
                 .build();
@@ -154,7 +155,7 @@ public class JourneyBuilderTest {
         Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);
         Mockito.when(mockRequest.getDestinationAirport()).thenReturn("D");
 
-        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
+        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(SampleDataProvider.getFlights());
         JourneyResponse journeyResponse = new JourneyBuilder(mockRequest)
                 .withRoadJourney()
                 .withAirJourney(flightGraph)
@@ -176,7 +177,7 @@ public class JourneyBuilderTest {
         Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);
         Mockito.when(mockRequest.getDestinationAirport()).thenReturn("D");
 
-        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
+        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(SampleDataProvider.getFlights());
         JourneyResponse journeyResponse = new JourneyBuilder(mockRequest)
                 .withRoadJourney()
                 .withAirJourney(flightGraph)

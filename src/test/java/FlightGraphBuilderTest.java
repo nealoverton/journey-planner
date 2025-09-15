@@ -1,4 +1,5 @@
 import com.example.Constant;
+import com.example.SampleDataProvider;
 import com.example.flight.Flight;
 import com.example.flight.FlightGraphBuilder;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +14,7 @@ public class FlightGraphBuilderTest {
     @Test
     @DisplayName("Create graph from valid data")
     public void testCreateGraph() {
-        Map<String, List<Flight>> graph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
+        Map<String, List<Flight>> graph = FlightGraphBuilder.buildGraph(SampleDataProvider.getFlights());
         assertEquals(6, graph.size());
         assertEquals(3, graph.get("C").size());
         assertEquals(1, graph.get("A").size());
