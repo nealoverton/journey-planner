@@ -1,4 +1,4 @@
-package Journey;
+package journey;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,6 +8,7 @@ public class JourneyBuilder {
     private JourneyRequest journeyRequest;
     private boolean includeRoadJourney;
     private boolean includeAirJourney;
+    private static final int ROAD_JOURNEY_LEGS = 2;
 
     public JourneyBuilder(JourneyRequest journeyRequest) {
         if (journeyRequest == null) {
@@ -47,13 +48,15 @@ public class JourneyBuilder {
 
     private double calculateRoadJourneyCost(RoadVehicle vehicle) {
         double vehiclesRequired = Math.ceil((double) journeyRequest.getPassengers()/vehicle.getMaxPassengers());
-        return ((vehicle.getCostPerMileInPounds() * journeyRequest.getHomeAirportDistanceMiles() * 2) + vehicle.getParkingFee()) * vehiclesRequired;
+        return ((vehicle.getCostPerMileInPounds() * journeyRequest.getHomeAirportDistanceMiles() * ROAD_JOURNEY_LEGS) + vehicle.getParkingFee()) * vehiclesRequired;
     }
 
     private void addAirJourneyDetails(JourneyResponse journeyResponse) {
         PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(
                 Comparator.comparingInt(Map.Entry::getValue)
         );
+
+        Map<String, Integer> distances = new HashMap<>();
     }
 
     private void validateRequest() {
@@ -71,16 +74,6 @@ public class JourneyBuilder {
             if (StringUtils.isBlank(journeyRequest.getDestinationAirport())) {
                 throw new IllegalArgumentException("Destination airport must be provided");
             }
-        }
-    }
-
-    static class Flight {
-        String targetAirport;
-        int distanceInMiles;
-
-        Flight(String targetAirport, int distanceInMiles) {
-            this.targetAirport = targetAirport;
-            this.distanceInMiles = distanceInMiles;
         }
     }
 }
