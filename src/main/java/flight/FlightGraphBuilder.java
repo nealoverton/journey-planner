@@ -21,12 +21,11 @@ public class FlightGraphBuilder {
                 int distance = Integer.parseInt(flight.substring(2));
 
                 graph.computeIfAbsent(from, key -> new ArrayList<>())
-                        .add(new Flight(to, distance));
+                        .add(new Flight(flight, from, to, distance));
             } catch (NumberFormatException exception) {
                 LOGGER.severe("Skipping invalid flight data: " + flight);
             }
         }
-        System.out.println(graph);
         return graph;
     }
 }

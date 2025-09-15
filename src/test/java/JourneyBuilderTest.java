@@ -1,3 +1,5 @@
+import flight.Flight;
+import flight.FlightGraphBuilder;
 import journey.JourneyBuilder;
 import journey.JourneyRequest;
 import journey.JourneyResponse;
@@ -6,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -104,18 +109,29 @@ public class JourneyBuilderTest {
         assertEquals("Home airport must be provided", exception.getMessage());
     }
 
-//    @Test
-//    @DisplayName("Calculates correct air journey details from valid request")
-//    public void testWithAirJourney() {
-//        Mockito.when(mockRequest.getPassengers()).thenReturn(2);
-//        Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
-//        Mockito.when(mockRequest.getDestinationAirport()).thenReturn("D");
-//
-//        JourneyResponse journeyResponse = new JourneyBuilder(mockRequest).withAirJourney().build();
-//        assertEquals("BF400--FD200", journeyResponse.getOutboundAirRoute());
-//        assertEquals( 120.00, journeyResponse.getOutboundAirCost());
-//        assertEquals("DE300--EB500", journeyResponse.getInboundAirRoute());
-//        assertEquals( 160.00, journeyResponse.getInboundAirCost());
-//        assertNull(journeyResponse.getRoadCost());
-//    }
+    @Test
+    @DisplayName("Calculates correct outbound air journey details from valid request")
+    public void testCalculatesOutboundAirJourney() {
+        Mockito.when(mockRequest.getPassengers()).thenReturn(2);
+        Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
+        Mockito.when(mockRequest.getDestinationAirport()).thenReturn("D");
+
+        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
+        JourneyResponse journeyResponse = new JourneyBuilder(mockRequest).withAirJourney(flightGraph).build();
+        assertEquals("BF400--FD200", journeyResponse.getOutboundAirRoute());
+        assertEquals( 120.00, journeyResponse.getOutboundAirCost());
+    }
+
+    @Test
+    @DisplayName("Calculates correct inbound air journey details from valid request")
+    public void testCalculatesInboundAirJourney() {
+        Mockito.when(mockRequest.getPassengers()).thenReturn(2);
+        Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
+        Mockito.when(mockRequest.getDestinationAirport()).thenReturn("D");
+
+        Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
+        JourneyResponse journeyResponse = new JourneyBuilder(mockRequest).withAirJourney(flightGraph).build();
+        assertEquals("BF400--FD200", journeyResponse.getInboundAirRoute());
+        assertEquals( 120.00, journeyResponse.getInboundAirCost());
+    }
 }

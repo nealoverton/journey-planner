@@ -1,14 +1,17 @@
 package journey;
 
+import flight.Flight;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
 public class JourneyBuilder {
+    private static final int RETURN_JOURNEY_LEGS = 2;
+    private static final double AIR_JOURNEY_COST_PER_MILE = 0.1;
     private JourneyRequest journeyRequest;
     private boolean includeRoadJourney;
     private boolean includeAirJourney;
-    private static final int ROAD_JOURNEY_LEGS = 2;
+    private Map<String, List<Flight>> flightGraph;
 
     public JourneyBuilder(JourneyRequest journeyRequest) {
         if (journeyRequest == null) {
@@ -22,8 +25,9 @@ public class JourneyBuilder {
         return this;
     }
 
-    public JourneyBuilder withAirJourney() {
+    public JourneyBuilder withAirJourney(Map<String, List<Flight>> flightGraph) {
         includeAirJourney = true;
+        this.flightGraph = flightGraph;
         return this;
     }
 
@@ -32,6 +36,9 @@ public class JourneyBuilder {
         JourneyResponse journeyResponse = new JourneyResponse();
         if (includeRoadJourney) {
             addRoadJourneyDetails(journeyResponse);
+        }
+        if (includeAirJourney) {
+            addAirJourneyDetails(journeyResponse);
         }
         return journeyResponse;
     }
@@ -48,15 +55,55 @@ public class JourneyBuilder {
 
     private double calculateRoadJourneyCost(RoadVehicle vehicle) {
         double vehiclesRequired = Math.ceil((double) journeyRequest.getPassengers()/vehicle.getMaxPassengers());
-        return ((vehicle.getCostPerMileInPounds() * journeyRequest.getHomeAirportDistanceMiles() * ROAD_JOURNEY_LEGS) + vehicle.getParkingFee()) * vehiclesRequired;
+        return ((vehicle.getCostPerMileInPounds() * journeyRequest.getHomeAirportDistanceMiles() * RETURN_JOURNEY_LEGS) + vehicle.getParkingFee()) * vehiclesRequired;
     }
 
     private void addAirJourneyDetails(JourneyResponse journeyResponse) {
         PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(
                 Comparator.comparingInt(Map.Entry::getValue)
         );
-
         Map<String, Integer> distances = new HashMap<>();
+        Map<String, Flight> previousFlights = new HashMap<>();
+
+        for (String vertex : flightGraph.keySet()) {
+            distances.put(vertex, Integer.MAX_VALUE);
+            previousFlights.put(vertex, null);
+        }
+        String startingAirport = journeyRequest.getHomeAirport();
+        distances.put(startingAirport, 0);
+
+        priorityQueue.offer(new AbstractMap.SimpleEntry<>(startingAirport, 0));
+
+        while (!priorityQueue.isEmpty()) {
+            Map.Entry<String, Integer> current = priorityQueue.poll();
+            String currentNode = current.getKey();
+            int currentDist = current.getValue();
+
+            // If this distance is already larger than known, skip
+            if (currentDist > distances.get(currentNode)) continue;
+
+            // Explore neighbors
+            for (Flight flight : flightGraph.getOrDefault(currentNode, Collections.emptyList())) {
+                int newDistance = currentDist + flight.getDistanceInMiles();
+                String targetAirport = flight.getTargetAirport();
+                if (newDistance < distances.getOrDefault(targetAirport, Integer.MAX_VALUE)) {
+                    distances.put(targetAirport, newDistance);
+                    previousFlights.put(targetAirport, flight);
+                    priorityQueue.offer(new AbstractMap.SimpleEntry<>(targetAirport, newDistance));
+                }
+            }
+        }
+
+        List<String> route = new ArrayList<>();
+        String current = journeyRequest.getDestinationAirport();
+        while (previousFlights.get(current) != null) {
+            Flight flight = previousFlights.get(current);
+            route.add(0, flight.getName());
+            current = flight.getSourceAirport();
+        }
+
+        journeyResponse.setOutboundAirRoute(String.join("--", route));
+        journeyResponse.setOutboundAirCost(distances.get(journeyRequest.getDestinationAirport()) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
     }
 
     private void validateRequest() {
