@@ -1,4 +1,4 @@
-# journey Planner
+# Journey Planner
 
 ## About
 Journey Planner is a tool for finding the quickest and cheapest route to a destination.
