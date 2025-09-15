@@ -28,9 +28,7 @@ public class JourneyBuilderTest {
     @Test
     @DisplayName("Can't be instantiated with null JourneyRequest")
     public void testUnsuccessfulNullRequestInstantiation() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new JourneyBuilder(null);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new JourneyBuilder(null));
         assertEquals("Journey Request cannot be null", exception.getMessage());
     }
 
@@ -86,9 +84,7 @@ public class JourneyBuilderTest {
         Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
         Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new JourneyBuilder(mockRequest).withRoadJourney().build();
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new JourneyBuilder(mockRequest).withRoadJourney().build());
         assertEquals("Passengers must not be null", exception.getMessage());
     }
 
@@ -99,9 +95,7 @@ public class JourneyBuilderTest {
         Mockito.when(mockRequest.getHomeAirport()).thenReturn("B");
         Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new JourneyBuilder(mockRequest).withRoadJourney().build();
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new JourneyBuilder(mockRequest).withRoadJourney().build());
         assertEquals("Passengers must be greater than zero", exception.getMessage());
     }
 
@@ -112,9 +106,7 @@ public class JourneyBuilderTest {
         Mockito.when(mockRequest.getHomeAirport()).thenReturn(null);
         Mockito.when(mockRequest.getHomeAirportDistanceMiles()).thenReturn(20);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new JourneyBuilder(mockRequest).withRoadJourney().build();
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new JourneyBuilder(mockRequest).withRoadJourney().build());
         assertEquals("Home airport must be provided", exception.getMessage());
     }
 
