@@ -1,7 +1,5 @@
 package com.example.flight;
 
-import com.example.journey.JourneyRequest;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +7,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class FlightGraphBuilder {
-    private static final Logger LOGGER = Logger.getLogger(JourneyRequest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FlightGraphBuilder.class.getName());
 
     public static Map<String, List<Flight>> buildGraph(List<String> flights) {
         Map<String, List<Flight>> graph = new HashMap<>();
