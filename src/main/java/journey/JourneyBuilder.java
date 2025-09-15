@@ -59,7 +59,15 @@ public class JourneyBuilder {
     }
 
     private void addAirJourneyDetails(JourneyResponse journeyResponse) {
+        calculateOutboundAirJourney(journeyResponse);
+        calculateInboundAirJourney(journeyResponse);
+    }
+
+    private void calculateOutboundAirJourney(JourneyResponse journeyResponse) {
         calculateAirJourneyCost(journeyResponse, journeyRequest.getHomeAirport(), journeyRequest.getDestinationAirport(), true);
+    }
+
+    private void calculateInboundAirJourney(JourneyResponse journeyResponse) {
         calculateAirJourneyCost(journeyResponse, journeyRequest.getDestinationAirport(), journeyRequest.getHomeAirport(), false);
     }
 
@@ -83,10 +91,8 @@ public class JourneyBuilder {
             String currentNode = current.getKey();
             int currentDist = current.getValue();
 
-            // If this distance is already larger than known, skip
             if (currentDist > distances.get(currentNode)) continue;
 
-            // Explore neighbors
             for (Flight flight : flightGraph.getOrDefault(currentNode, Collections.emptyList())) {
                 int newDistance = currentDist + flight.getDistanceInMiles();
                 String targetAirport = flight.getTargetAirport();
