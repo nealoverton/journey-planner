@@ -1,7 +1,7 @@
 package com.example.integration;
 
-import com.example.Constant;
-import com.example.SampleDataProvider;
+import com.example.util.Constant;
+import com.example.data.SampleDataProvider;
 import com.example.flight.FlightGraphBuilder;
 import com.example.journey.JourneyInput;
 import com.example.journey.JourneyRequest;

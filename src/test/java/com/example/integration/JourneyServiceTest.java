@@ -1,6 +1,6 @@
 package com.example.integration;
 
-import com.example.SampleDataProvider;
+import com.example.data.SampleDataProvider;
 import com.example.flight.FlightGraphBuilder;
 import com.example.journey.JourneyRequest;
 import com.example.journey.JourneyResponse;

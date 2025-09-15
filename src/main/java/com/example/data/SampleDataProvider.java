@@ -1,4 +1,4 @@
-package com.example;
+package com.example.data;
 
 import com.example.journey.JourneyInput;
 import com.example.journey.JourneyRequest;

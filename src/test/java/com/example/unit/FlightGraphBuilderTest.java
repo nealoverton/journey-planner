@@ -1,6 +1,6 @@
 package com.example.unit;
 
-import com.example.SampleDataProvider;
+import com.example.data.SampleDataProvider;
 import com.example.flight.Flight;
 import com.example.flight.FlightGraphBuilder;
 import org.junit.jupiter.api.DisplayName;

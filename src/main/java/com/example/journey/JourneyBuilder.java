@@ -1,6 +1,6 @@
 package com.example.journey;
 
-import com.example.Constant;
+import com.example.util.Constant;
 import com.example.flight.Flight;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

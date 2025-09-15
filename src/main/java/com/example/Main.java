@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.data.SampleDataProvider;
 import com.example.flight.Flight;
 import com.example.flight.FlightGraphBuilder;
 import com.example.journey.JourneyRequest;
