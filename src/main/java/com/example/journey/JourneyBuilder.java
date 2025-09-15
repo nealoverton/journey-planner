@@ -1,6 +1,8 @@
-package journey;
+package com.example.journey;
 
-import flight.Flight;
+import com.example.Constant;
+import com.example.flight.Flight;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -39,6 +41,11 @@ public class JourneyBuilder {
         }
         if (includeAirJourney) {
             addAirJourneyDetails(journeyResponse);
+        }
+        if (journeyResponse.getRoadCost() == 0 || journeyResponse.getOutboundAirCost() == 0 || journeyResponse.getInboundAirCost() == 0) {
+            journeyResponse.setTotalCost(0);
+        } else {
+            journeyResponse.setTotalCost(journeyResponse.getRoadCost() + journeyResponse.getOutboundAirCost() + journeyResponse.getInboundAirCost());
         }
         return journeyResponse;
     }
@@ -113,11 +120,21 @@ public class JourneyBuilder {
         }
 
         if (isOutbound) {
-            journeyResponse.setOutboundAirRoute(String.join("--", route));
-            journeyResponse.setOutboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+            if (CollectionUtils.isEmpty(route)) {
+               journeyResponse.setOutboundAirRoute(Constant.NO_OUTBOUND_FLIGHT);
+               journeyResponse.setOutboundAirCost(0);
+            } else {
+                journeyResponse.setOutboundAirRoute(String.join("--", route));
+                journeyResponse.setOutboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+            }
         } else {
-            journeyResponse.setInboundAirRoute(String.join("--", route));
-            journeyResponse.setInboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+            if (CollectionUtils.isEmpty(route)) {
+                journeyResponse.setInboundAirRoute(Constant.NO_INBOUND_FLIGHT);
+                journeyResponse.setInboundAirCost(0);
+            } else {
+                journeyResponse.setInboundAirRoute(String.join("--", route));
+                journeyResponse.setInboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+            }
         }
     }
 
