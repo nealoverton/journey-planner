@@ -1,10 +1,10 @@
 package com.example.flight;
 
 public class Flight {
-    private String name;
-    private String sourceAirport;
-    private String targetAirport;
-    private int distanceInMiles;
+    private final String name;
+    private final String sourceAirport;
+    private final String targetAirport;
+    private final int distanceInMiles;
 
     Flight(String name, String sourceAirport, String targetAirport, int distanceInMiles) {
         this.name = name;

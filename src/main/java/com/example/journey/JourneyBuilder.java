@@ -9,7 +9,7 @@ import java.util.*;
 
 public class JourneyBuilder {
     private static final int RETURN_JOURNEY_LEGS = 2;
-    private JourneyRequest journeyRequest;
+    private final JourneyRequest journeyRequest;
     private boolean includeRoadJourney;
     private boolean includeAirJourney;
     private Map<String, List<Flight>> flightGraph;
