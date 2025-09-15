@@ -1,5 +1,7 @@
 package com.example.journey;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -20,6 +22,14 @@ public class JourneyRequest {
     }
 
     public static Optional<JourneyRequest> fromInput(Integer passengers, String homeAirportJourney, String destinationAirport) {
+        if (passengers == null
+                || passengers <= 0
+                || StringUtils.isBlank(homeAirportJourney)
+                || StringUtils.isBlank(destinationAirport)
+        ) {
+            return Optional.empty();
+        }
+
         Pattern homeAirportJourneyPattern = Pattern.compile("^([A-Z]+)(\\d+)$");
         Matcher homeAirportJourneyMatcher = homeAirportJourneyPattern.matcher(homeAirportJourney);
         if (homeAirportJourneyMatcher.matches()) {
