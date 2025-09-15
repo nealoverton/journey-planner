@@ -131,7 +131,7 @@ public class JourneyBuilderTest {
 
         Map<String, List<Flight>> flightGraph = FlightGraphBuilder.buildGraph(Constant.FLIGHTS);
         JourneyResponse journeyResponse = new JourneyBuilder(mockRequest).withAirJourney(flightGraph).build();
-        assertEquals("BF400--FD200", journeyResponse.getInboundAirRoute());
-        assertEquals( 120.00, journeyResponse.getInboundAirCost());
+        assertEquals("DE300--EB500", journeyResponse.getInboundAirRoute());
+        assertEquals( 160.00, journeyResponse.getInboundAirCost());
     }
 }

@@ -59,6 +59,11 @@ public class JourneyBuilder {
     }
 
     private void addAirJourneyDetails(JourneyResponse journeyResponse) {
+        calculateAirJourneyCost(journeyResponse, journeyRequest.getHomeAirport(), journeyRequest.getDestinationAirport(), true);
+        calculateAirJourneyCost(journeyResponse, journeyRequest.getDestinationAirport(), journeyRequest.getHomeAirport(), false);
+    }
+
+    private void calculateAirJourneyCost(JourneyResponse journeyResponse, String startingAirport, String destinationAirport, boolean isOutbound) {
         PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>(
                 Comparator.comparingInt(Map.Entry::getValue)
         );
@@ -69,7 +74,6 @@ public class JourneyBuilder {
             distances.put(vertex, Integer.MAX_VALUE);
             previousFlights.put(vertex, null);
         }
-        String startingAirport = journeyRequest.getHomeAirport();
         distances.put(startingAirport, 0);
 
         priorityQueue.offer(new AbstractMap.SimpleEntry<>(startingAirport, 0));
@@ -95,15 +99,20 @@ public class JourneyBuilder {
         }
 
         List<String> route = new ArrayList<>();
-        String current = journeyRequest.getDestinationAirport();
+        String current = destinationAirport;
         while (previousFlights.get(current) != null) {
             Flight flight = previousFlights.get(current);
             route.add(0, flight.getName());
             current = flight.getSourceAirport();
         }
 
-        journeyResponse.setOutboundAirRoute(String.join("--", route));
-        journeyResponse.setOutboundAirCost(distances.get(journeyRequest.getDestinationAirport()) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+        if (isOutbound) {
+            journeyResponse.setOutboundAirRoute(String.join("--", route));
+            journeyResponse.setOutboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+        } else {
+            journeyResponse.setInboundAirRoute(String.join("--", route));
+            journeyResponse.setInboundAirCost(distances.get(destinationAirport) * AIR_JOURNEY_COST_PER_MILE * RETURN_JOURNEY_LEGS);
+        }
     }
 
     private void validateRequest() {
