@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JourneyServiceTest {
-    private JourneyService journeyService = new JourneyService(FlightGraphBuilder.buildGraph(SampleDataProvider.getFlights()));
+    private final JourneyService journeyService = new JourneyService(FlightGraphBuilder.buildGraph(SampleDataProvider.getFlights()));
     private final List<JourneyRequest> journeyRequests = SampleDataProvider.getJourneyRequests();
 
     @Test

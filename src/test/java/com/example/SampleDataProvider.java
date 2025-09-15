@@ -50,7 +50,7 @@ public class SampleDataProvider {
 
     private static final List<Optional<JourneyRequest>> optionalRequests = journeyInputs.stream()
             .map(input -> JourneyRequest.fromInput(input.getPassengers(), input.getHomeAirportJourney(), input.getDestinationAirport()))
-            .collect(Collectors.toList());
+            .toList();
 
     public static List<JourneyRequest> getJourneyRequests() {
         return optionalRequests.stream().flatMap(Optional::stream).collect(Collectors.toList());

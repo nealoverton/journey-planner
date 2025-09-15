@@ -86,6 +86,6 @@ public class SampleDataProof {
                     .append(Constant.NEW_LINE);
         }
 
-        System.out.println(outputBuilder.toString());
+        System.out.println(outputBuilder);
     }
 }
