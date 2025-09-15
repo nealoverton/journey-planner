@@ -1,12 +1,12 @@
-package Journey;
-
-import org.apache.commons.lang3.StringUtils;
+package journey;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JourneyRequest {
+    private static final Logger LOGGER = Logger.getLogger(JourneyRequest.class.getName());
     private final Integer passengers;
     private final Integer homeAirportDistanceMiles;
     private final String homeAirport;
@@ -28,9 +28,11 @@ public class JourneyRequest {
                 Integer homeAirportDistanceMiles = Integer.parseInt(homeAirportJourneyMatcher.group(2));
                 return Optional.of(new JourneyRequest(passengers, homeAirportDistanceMiles, homeAirport, destinationAirport));
             } catch (NumberFormatException exception) {
+                LOGGER.severe("Couldn't parse home airport distance from: " + homeAirportJourneyMatcher.group(2));
                 return Optional.empty();
             }
         }
+        LOGGER.severe("Couldn't parse home airport journey from: " + homeAirportJourney);
         return Optional.empty();
     }
 

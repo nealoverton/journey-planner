@@ -1,4 +1,4 @@
-package Journey;
+package journey;
 
 public class JourneyResponse {
     private String roadVehicleName;

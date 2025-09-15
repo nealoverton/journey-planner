@@ -1,4 +1,4 @@
-package Journey;
+package journey;
 
 public enum RoadVehicle {
     CAR("Car", 4, 0.2, 3),

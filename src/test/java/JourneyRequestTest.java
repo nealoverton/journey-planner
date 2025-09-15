@@ -1,4 +1,4 @@
-import Journey.JourneyRequest;
+import journey.JourneyRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
