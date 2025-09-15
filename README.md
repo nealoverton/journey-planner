@@ -36,3 +36,7 @@ Each Test class and method can be run individually by clicking IntelliJ's run bu
 ### Running Tests With Maven
 
 The tests for this application can be run using the Maven command `mvn test`.
+
+### Sample Data Proof
+
+Included in the test suite is the file SampleDataProof, which simply outputs to the terminal the results of processing the sample data as per the requirements. 
