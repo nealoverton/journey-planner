@@ -3,6 +3,14 @@
 ## About
 Journey Planner is a tool for finding the quickest and cheapest route to a destination.
 
+## Requirements
+
+- Java Development Kit (JDK) 17
+- Maven 3.6 or higher (for building and running the project)
+- IntelliJ IDEA or another compatible IDE (optional, for development)
+
+Ensure your `JAVA_HOME` environment variable points to JDK 17.
+
 ## Getting Started
 To run the application locally in IntelliJ
 
@@ -11,7 +19,7 @@ To run the application locally in IntelliJ
 
 These commands can be run from IntelliJ's Maven window by clicking on 'Execute Maven Goal' and entering the command. Alternatively these commands can be run by adding clicking 'Edit Configurations' in IntelliJ's run options and adding a Maven configuration with the relevant command in the 'Command line' field.
 
-As the project's dependecies are handled by Maven, simply running the main class will result in a build failure unless build/run actions are delegated to Maven by your IDE. This can be done in IntelliJ by visiting:
+As the project's dependencies are handled by Maven, simply running the main class will result in a build failure unless build/run actions are delegated to Maven by your IDE. This can be done in IntelliJ via:
 
 Settings -> Build, Execution, Deployment -> Build Tools -> Maven -> Runner
 
