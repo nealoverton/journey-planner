@@ -29,9 +29,9 @@ and checking the box 'Delegate IDE build/run actions to Maven'.
 
 ### Running Tests With IntelliJ
 
-The tests for this application can be found in `src/test/java`. To run the whole suite of tests for the application right click on the `src/test/java` directory in IntelliJ's Project window and select `Run 'Tests in 'java''`.
+The tests for this application can be found in `src/test/java/com/example`. To run the whole suite of tests for the application right click on the `src/test/java/com/example` directory in IntelliJ's Project window and select `Run 'Tests in 'example''`.
 
-Each Test class and method can be run individually by clicking IntelliJ's run button next to the class or method in the test file.
+Unit and integration tests can be run separately by running all tests in their respective directories. Each Test class and method can be run individually by clicking IntelliJ's run button next to the class or method in the test file.
 
 ### Running Tests With Maven
 
