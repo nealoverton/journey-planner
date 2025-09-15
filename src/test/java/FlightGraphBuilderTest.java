@@ -1,5 +1,6 @@
-import flight.Flight;
-import flight.FlightGraphBuilder;
+import com.example.Constant;
+import com.example.flight.Flight;
+import com.example.flight.FlightGraphBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

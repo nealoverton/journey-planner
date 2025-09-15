@@ -1,6 +1,6 @@
-package flight;
+package com.example.flight;
 
-import journey.JourneyRequest;
+import com.example.journey.JourneyRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;

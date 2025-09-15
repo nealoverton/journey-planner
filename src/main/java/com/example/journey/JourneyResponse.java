@@ -1,4 +1,4 @@
-package journey;
+package com.example.journey;
 
 public class JourneyResponse {
     private String roadVehicleName;
@@ -7,6 +7,7 @@ public class JourneyResponse {
     private double outboundAirCost;
     private String inboundAirRoute;
     private double inboundAirCost;
+    private double totalCost;
 
     public String getRoadVehicleName() {
         return roadVehicleName;
@@ -54,5 +55,13 @@ public class JourneyResponse {
 
     public void setInboundAirCost(double inboundAirCost) {
         this.inboundAirCost = inboundAirCost;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 }

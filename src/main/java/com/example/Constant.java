@@ -1,3 +1,5 @@
+package com.example;
+
 import java.util.List;
 
 public class Constant {
@@ -19,4 +21,6 @@ public class Constant {
             "EB500",
             "FD200"
     );
+    public static final String NO_OUTBOUND_FLIGHT = "No outbound flight";
+    public static final String NO_INBOUND_FLIGHT = "No inbound flight";
 }

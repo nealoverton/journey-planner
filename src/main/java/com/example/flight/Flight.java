@@ -1,4 +1,4 @@
-package flight;
+package com.example.flight;
 
 public class Flight {
     private String name;

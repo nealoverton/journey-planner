@@ -1,4 +1,4 @@
-package journey;
+package com.example.journey;
 
 import java.util.Optional;
 import java.util.logging.Logger;
